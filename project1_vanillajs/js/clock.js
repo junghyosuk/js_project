@@ -5,7 +5,7 @@ function getClock(){
     const hours=String(date.getHours()).padStart(2, "0"); //2자리 숫자로 만들어준다. 1->01
     const minutes=String(date.getMinutes()).padStart(2, "0"); //2자리 숫자로 만들어준다. 1->01;
     const seconds=String(date.getSeconds()).padStart(2, "0"); //2자리 숫자로 만들어준다. 1->01;
-    clock.innerText = `${hours}:${minutes}:${seconds}`;
+    clock.innerText = `현재시간 ${hours}:${minutes}:${seconds}`;
 }
 
 getClock();

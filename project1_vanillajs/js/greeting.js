@@ -16,17 +16,11 @@ function onLoginSubmit(e){
     //greeting.innerHTML="Hello " + username;
     paintingGreeting(username);
     
-    
-    // if(username === ""){
-    //     alert("Please write your name");
-    // }else if(username.length > 15){
-    //     alert("Your name is too long.");
-    // }
 }
 
 function paintingGreeting(username){
     greeting.classList.remove(HIDDEN_CLASSNAME);
-    greeting.innerHTML=`Hello ${username}`;
+    greeting.innerHTML=`${username}님 환영합니다.`;
 }
 
 //loginForm.addEventListener("submit", onLoginSubmit);

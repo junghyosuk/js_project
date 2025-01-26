@@ -24,10 +24,14 @@ function deleteTodo(e){
 function paintTodo(newTodo){
     const li=document.createElement("li");
     li.id=newTodo.id;
+    const checkbox=document.createElement("input");
+    checkbox.type="checkbox";
+    checkbox.classList="chk_todo"
+    li.appendChild(checkbox);
     const span=document.createElement("span");   
     span.innerText=newTodo.text;
     const button=document.createElement("button");
-    button.innerText="❌";
+    button.innerText="X";
     button.addEventListener("click", deleteTodo);
     li.appendChild(span);
     li.appendChild(button);    
