@@ -1,4 +1,4 @@
-const images=["bg1.jpg","bg2.jpg","bg3.jpg"];
+const images=["bg1.JPG","bg2.JPG","bg3.JPG"];
 
 const chosenImage=images[Math.floor(Math.random()*images.length)];//랜덤으로 이미지를 선택
 const bgImage=document.createElement("img");//이미지 태그 생성
