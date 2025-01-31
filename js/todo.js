@@ -2,61 +2,69 @@ const todoForm = document.getElementById("todoForm");
 const todoInput = document.querySelector("#todoForm input");
 const todoList = document.getElementById("todoList");
 
-const TODO_KEY="todo";
+const TODO_KEY = "todo";
 
-let toDo=[];
+let toDo = [];
 
-function saveTodo(){
+// 체크 상태를 저장하는 함수
+function saveTodo() {
     localStorage.setItem(TODO_KEY, JSON.stringify(toDo));
-    //localStorate에는 string만 저장할 수 있고 Array는 저장할 수 없다.
-    //그래서 JSON.stringify를 사용하여 Array를 string으로 변환하여 저장한다.
-    //반대로 JSON.parse를 사용하여 string을 Array로 변환할수도 있다.
 }
 
-
-function deleteTodo(e){
-    const li=e.target.parentElement;
+// 할일 삭제
+function deleteTodo(e) {
+    const li = e.target.parentElement;
     li.remove();
-    toDo=toDo.filter((todo) => todo.id !== parseInt(li.id));
+    toDo = toDo.filter((todo) => todo.id !== parseInt(li.id));
     saveTodo();
 }
 
-function paintTodo(newTodo){
-    const li=document.createElement("li");
-    li.id=newTodo.id;
-    const checkbox=document.createElement("input");
-    checkbox.type="checkbox";
-    checkbox.classList="chk_todo"
+// 할일 추가 및 체크 상태 저장
+function paintTodo(newTodo) {
+    const li = document.createElement("li");
+    li.id = newTodo.id;
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.classList.add("chk_todo");
+    checkbox.checked = newTodo.checked; // 체크 상태 설정
+    checkbox.addEventListener("change", () => {
+        newTodo.checked = checkbox.checked; // 체크 상태 업데이트
+        saveTodo(); // 상태 저장
+    });
+
     li.appendChild(checkbox);
-    const span=document.createElement("span");   
-    span.innerText=newTodo.text;
-    const button=document.createElement("button");
-    button.innerText="X";
+    const span = document.createElement("span");
+    span.innerText = newTodo.text;
+    const button = document.createElement("button");
+    button.innerText = "X";
     button.addEventListener("click", deleteTodo);
     li.appendChild(span);
-    li.appendChild(button);    
+    li.appendChild(button);
     todoList.appendChild(li);
-
 }
 
-function handleTodoSubmit(e){
+// 할일 제출 처리
+function handleTodoSubmit(e) {
     e.preventDefault();
     const newTodo = todoInput.value;
-    todoInput.value="";
-    const newTodoObj={
-        text:newTodo,
-        id:Date.now()
+    todoInput.value = "";
+    const newTodoObj = {
+        text: newTodo,
+        id: Date.now(),
+        checked: false // 기본적으로 체크되지 않음
     };
     toDo.push(newTodoObj);
     paintTodo(newTodoObj);
     saveTodo();
 }
 
+// 할일 목록 불러오기
 todoForm.addEventListener("submit", handleTodoSubmit);
 
 const savedTodo = localStorage.getItem(TODO_KEY);
 
-if(savedTodo != null){
+if (savedTodo != null) {
     const parsedTodo = JSON.parse(savedTodo);
     toDo = parsedTodo;
     parsedTodo.forEach(paintTodo);
